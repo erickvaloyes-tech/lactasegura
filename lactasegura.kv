@@ -1,0 +1,937 @@
+#:import dp kivy.metrics.dp
+
+<Screen>:
+    canvas.before:
+        Color:
+            rgba: 0.98, 0.92, 0.84, 1  # Tono piel más suave y agradable
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<SplashScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(24)
+        spacing: dp(16)
+
+        Widget:
+            size_hint_y: 0.2
+
+        Label:
+            text: 'LactaSegura'
+            font_size: '48sp'
+            color: 1, 0.5, 0, 1  # Color naranja
+            size_hint_y: None
+            height: dp(80)
+            bold: True
+
+        Label:
+            text: 'Cuidar, Alimentar y Proteger\nApp Educativa'
+            font_size: '24sp'
+            color: 0.3, 0.3, 0.3, 1  # Gris oscuro
+            size_hint_y: None
+            height: dp(80)
+            halign: 'center'
+
+        Widget:
+            size_hint_y: 0.3
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            spacing: dp(12)
+            padding: dp(12)
+            Button:
+                text: 'Entrar'
+                on_release: app.abrir_pantalla('menu')
+                background_normal: ''
+                background_color: 1, 0.5, 0, 1  # Naranja consistente
+                font_size: '18sp'
+            Button:
+                text: 'Salir'
+                on_release: app.stop()
+                background_normal: ''
+                background_color: 0.7, 0.7, 0.7, 1
+                font_size: '18sp'
+
+<MainMenu>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(16)
+        spacing: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            spacing: dp(10)
+
+            Label:
+                text: 'LactaSegura'
+                size_hint_x: 0.7
+                font_size: '32sp'
+                color: 1, 0.5, 0, 1  # Color naranja consistente
+                bold: True
+            
+            # Indicador de estado de conexión
+            BoxLayout:
+                size_hint_x: 0.3
+                orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgba: (0.4, 0.8, 0.4, 1) if root.online else (0.8, 0.4, 0.4, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(5)]
+                Label:
+                    text: root.sync_status
+                    font_size: '14sp'
+                    color: 0, 0, 0, 1
+                    bold: True
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            GridLayout:
+                id: menu_grid
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(8)
+                padding: dp(8)
+
+                Button:
+                    text: 'Guía para madres'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_madres()
+                    background_normal: ''
+                    background_color: 0.2, 0.6, 0.9, 1  # Azul más vibrante
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+                Button:
+                    text: 'Guía para enfermeros'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_enfermeros()
+                    background_normal: ''
+                    background_color: 0.9, 0.4, 0.4, 1  # Rojo suave
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+                Button:
+                    text: 'Artículos'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_articulos()
+                    background_normal: ''
+                    background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+                Button:
+                    text: 'Calculadora IMC'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_imc()
+                    background_normal: ''
+                    background_color: 0.8, 0.6, 0.2, 1  # Amarillo dorado
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+                Button:
+                    text: 'Registro local'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_registro()
+                    background_normal: ''
+                    background_color: 0.6, 0.4, 0.8, 1  # Púrpura suave
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+                Button:
+                    text: 'Acerca'
+                    size_hint_y: None
+                    height: dp(56)
+                    on_release: root.abrir_acerca()
+                    background_normal: ''
+                    background_color: 0.8, 0.8, 0.2, 1  # Lima suave
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '18sp'
+                    bold: True
+
+<GuiaMadres>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+        ScrollView:
+            GridLayout:
+                cols:1
+                size_hint_y: None
+                height: self.minimum_height
+                Label:
+                    text: "Guía para madres"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: dp(40)
+                    color: 0, 0, 0, 1  # Texto negro
+                    bold: True
+                Label:
+                    text: "Lactancia materna exclusiva:\nBeneficios: protección inmunológica, mejor nutrición, vínculo madre-hijo.\n\nTécnica: posición cómoda, boca bien abierta, labio inferior evertido.\n\nReconocer la desnutrición:\nSignos: pérdida de peso, letargo, piel seca.\n\nEmergencias: si no puedes amamantar, busca apoyo profesional y evita el uso de fórmula sin supervisión.\n\nLactancia cruzada: sólo con evaluación profesional y consentimiento."
+                    text_size: self.width - dp(20), None
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '16sp'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            spacing: dp(8)
+            Button:
+                text: "Actualizar (web)"
+                on_release: app.refresh_articles(); articles_status.text = 'Actualizando...'
+                background_normal: ""
+                background_color: 0.2, 0.6, 0.9, 1  # Azul vibrante
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+            Button:
+                text: "Limpiar lista"
+                on_release: art_grid.clear_widgets(); root.articles = []; articles_status.text = 'Lista vaciada'
+                background_normal: ""
+                background_color: 0.9, 0.4, 0.4, 1  # Rojo suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+            Button:
+                text: "Volver al menú"
+                on_release: app.root.current = "menu"
+                background_normal: ""
+                background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+        BoxLayout:
+            size_hint_y: None
+            height: dp(28)
+            Label:
+                id: articles_status
+                text: ''
+                font_size: '12sp'
+
+<GuiaEnfermeros>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+        ScrollView:
+            GridLayout:
+                cols:1
+                size_hint_y: None
+                height: self.minimum_height
+                Label:
+                    text: "Guía para enfermeros"
+                    font_size: "24sp"
+                    size_hint_y: None
+                    height: dp(40)
+                    color: 0, 0, 0, 1  # Texto negro
+                    bold: True
+                Label:
+                    text: "Valoración nutricional:\n- Peso, talla, registro en curvas.\nIntervención y educación:\n- Consejería en lactancia, acompañamiento psicoemocional.\nProtocolos en emergencias:\n- Identificar lactantes vulnerables; facilitar lactancia cruzada segura; articular con equipos humanitarios."
+                    text_size: self.width - dp(20), None
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    color: 0, 0, 0, 1  # Texto negro
+                    font_size: '16sp'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            Button:
+                text: "Volver al menú"
+                on_release: app.root.current = "menu"
+                background_normal: ""
+                background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+
+<Articulos>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+        ScrollView:
+            GridLayout:
+                id: art_grid
+                cols:1
+                size_hint_y: None
+                height: self.minimum_height
+        BoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            Button:
+                text: "Volver"
+                on_release: app.root.current = "menu"
+                background_normal: ""
+                background_color: 1,0.78,0.82,1
+
+<ResumenArticulo>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(10)
+        spacing: dp(8)
+        Label:
+            text: root.title
+            font_size: "18sp"
+            size_hint_y: None
+            height: dp(40)
+            color: 0.91,0.48,0.54,1
+        ScrollView:
+            BoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                Label:
+                    id: content_label
+                    text: root.content
+                    text_size: self.width - dp(20), None
+                    size_hint_y: None
+                    height: self.texture_size[1]
+        BoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            spacing: dp(8)
+            Button:
+                text: "Abrir fuente (web)"
+                on_release: app.abrir_en_navegador(root.content_link if hasattr(root, 'content_link') else 'https://google.com')
+                background_normal: ""
+                background_color: 0.2, 0.6, 0.9, 1  # Azul vibrante
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+            Button:
+                text: "Volver a artículos"
+                on_release: app.root.current = "articulos"
+                background_normal: ""
+                background_color: 0.9, 0.4, 0.4, 1  # Rojo suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+            Button:
+                text: "Volver al menú"
+                on_release: app.root.current = "menu"
+                background_normal: ""
+                background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+
+<HistorialIMC>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(10)
+
+        Label:
+            text: 'Historial de IMC'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            bold: True
+
+        BoxLayout:
+            id: graficos_layout
+            orientation: "vertical"
+            size_hint_y: 0.4
+            padding: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.95, 0.95, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        ScrollView:
+            GridLayout:
+                id: history_grid
+                cols: 1
+                spacing: dp(10)
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+
+            Button:
+                text: "Volver al menú"
+                background_normal: ""
+                background_color: 0.8, 0.4, 0.4, 1  # Rojo suave
+                color: 0, 0, 0, 1
+                font_size: '16sp'
+                bold: True
+                on_release: app.root.current = 'menu'
+
+<CalculadoraIMC>:
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 0.98, 0.98, 0.98, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(10)
+
+        Label:
+            text: 'Calculadora IMC'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            bold: True
+
+        Label:
+            text: "Para bebés y niños de 0 a 36 meses"
+            font_size: "16sp"
+            size_hint_y: None
+            height: dp(30)
+            color: 0.4, 0.4, 0.4, 1
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(240)
+            spacing: dp(20)
+            padding: [dp(20), dp(10)]
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.95, 0.95, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [dp(10)]
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(400)
+                padding: [dp(20), dp(10)]
+                spacing: dp(15)
+                canvas.before:
+                    Color:
+                        rgba: 0.95, 0.95, 0.95, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(15)]
+
+                # Edad
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(80)
+                    Label:
+                        text: f'Edad: {root.edad} meses'
+                        color: 0, 0, 0, 1
+                        size_hint_y: None
+                        height: dp(30)
+                        font_size: '16sp'
+                        markup: True
+                        text_size: self.width, None
+                        halign: 'center'
+                    Slider:
+                        min: 0
+                        max: 36
+                        step: 1
+                        value: float(root.edad) if root.edad and root.edad.replace('.','',1).isdigit() else 0
+                        on_value: root.edad = str(int(self.value))
+
+                # Peso
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(80)
+                    Label:
+                        text: f'Peso: {root.peso} kg'
+                        color: 0, 0, 0, 1
+                        size_hint_y: None
+                        height: dp(30)
+                        font_size: '16sp'
+                        markup: True
+                        text_size: self.width, None
+                        halign: 'center'
+                    Slider:
+                        min: 0.5
+                        max: 30
+                        step: 0.1
+                        value: float(root.peso) if root.peso else 3.0
+                        on_value: root.peso = f"{self.value:.1f}"
+
+                # Talla
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(80)
+                    Label:
+                        text: f'Talla: {root.talla} cm'
+                        color: 0, 0, 0, 1
+                        size_hint_y: None
+                        height: dp(30)
+                        font_size: '16sp'
+                        markup: True
+                        text_size: self.width, None
+                        halign: 'center'
+                    Slider:
+                        min: 30
+                        max: 120
+                        step: 0.5
+                        value: float(root.talla) if root.talla else 50
+                        on_value: root.talla = f"{self.value:.1f}"
+
+                # Resultado
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(120)
+                    canvas.before:
+                        Color:
+                            rgba: 0.9, 0.9, 0.95, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(10)]
+
+                    Label:
+                        text: 'IMC calculado:'
+                        color: 0, 0, 0, 1
+                        size_hint_y: None
+                        height: dp(30)
+                        font_size: '16sp'
+                    Label:
+                        text: root.resultado if root.resultado else '---'
+                        color: 0, 0, 0, 1
+                        font_size: '36sp'
+                        bold: True
+
+        ScrollView:
+            Label:
+                text: root.interpretacion
+                markup: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width - dp(40), None
+                padding: dp(20), dp(20)
+                color: 0, 0, 0, 1
+                font_size: '16sp'
+
+        Widget:
+            size_hint_y: 0.1
+
+        Button:
+            text: "Volver al menú"
+            size_hint_y: None
+            height: dp(44)
+            on_release: app.root.current = "menu"
+            background_normal: ""
+            background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+            color: 0, 0, 0, 1
+            font_size: '16sp'
+            bold: True
+
+<RegistroLocal>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(10)
+
+        Label:
+            text: 'Registros Locales'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            bold: True
+
+        ScrollView:
+            GridLayout:
+                id: content_grid
+                cols: 1
+                spacing: dp(10)
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(10)
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(320)
+                    padding: [dp(10), dp(10)]
+                    canvas.before:
+                        Color:
+                            rgba: 0.95, 0.95, 0.95, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(10)]
+
+                    Label:
+                        text: "Nuevo Registro"
+                        color: 0, 0, 0, 1
+                        font_size: '18sp'
+                        size_hint_y: None
+                        height: dp(30)
+                        bold: True
+
+                    TextInput:
+                        id: nombre
+                        hint_text: "Nombre del niño"
+                        size_hint_y: None
+                        height: dp(40)
+                        multiline: False
+
+                    TextInput:
+                        id: edad_meses
+                        hint_text: "Edad (meses)"
+                        size_hint_y: None
+                        height: dp(40)
+                        multiline: False
+                        input_filter: 'float'
+
+                    TextInput:
+                        id: peso_kg
+                        hint_text: "Peso (kg)"
+                        size_hint_y: None
+                        height: dp(40)
+                        multiline: False
+                        input_filter: 'float'
+
+                    TextInput:
+                        id: observacion
+                        hint_text: "Observación breve"
+                        size_hint_y: None
+                        height: dp(80)
+
+                    Button:
+                        text: "Guardar registro"
+                        size_hint_y: None
+                        height: dp(44)
+                        background_normal: ""
+                        background_color: 0.6, 0.4, 0.8, 1  # Púrpura suave
+                        color: 0, 0, 0, 1
+                        font_size: '16sp'
+                        bold: True
+                        on_release:
+                            root.save_record(nombre.text, edad_meses.text, peso_kg.text, observacion.text)
+                            nombre.text=''; edad_meses.text=''; peso_kg.text=''; observacion.text=''
+                
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(200)
+                    spacing: dp(10)
+                    padding: [dp(10), dp(20)]
+
+                    Label:
+                        text: "Registros guardados"
+                        color: 0, 0, 0, 1
+                        font_size: '18sp'
+                        size_hint_y: None
+                        height: dp(30)
+                        bold: True
+
+                    ScrollView:
+                        do_scroll_x: False
+                        GridLayout:
+                            id: records_grid
+                            cols: 1
+                            spacing: dp(8)
+                            size_hint_y: None
+                            height: self.minimum_height
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: dp(180)
+                        spacing: dp(10)
+                        padding: [dp(10), dp(10)]
+                        canvas.before:
+                            Color:
+                                rgba: 0.9, 0.9, 0.95, 1
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [dp(10)]
+
+                        TextInput:
+                            id: busqueda
+                            hint_text: "Buscar por nombre o fecha..."
+                            size_hint_y: None
+                            height: dp(40)
+                            multiline: False
+                            on_text: root.buscar_registros(self.text)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: dp(40)
+                            spacing: dp(10)
+                            TextInput:
+                                id: edad_min
+                                hint_text: "Edad min"
+                                size_hint_x: 0.3
+                                multiline: False
+                                input_filter: 'float'
+                            TextInput:
+                                id: edad_max
+                                hint_text: "Edad max"
+                                size_hint_x: 0.3
+                                multiline: False
+                                input_filter: 'float'
+                            Button:
+                                text: "Filtrar"
+                                size_hint_x: 0.4
+                                on_release: root.filtrar_por_edad(edad_min.text, edad_max.text)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: dp(40)
+                            spacing: dp(10)
+                            Button:
+                                text: "Por fecha"
+                                on_release: root.ordenar_registros('fecha')
+                            Button:
+                                text: "Por nombre"
+                                on_release: root.ordenar_registros('nombre')
+                            Button:
+                                text: "Por edad"
+                                on_release: root.ordenar_registros('edad')
+                            Button:
+                                text: "Por peso"
+                                on_release: root.ordenar_registros('peso')
+
+                    Button:
+                        text: "Exportar registros"
+                        size_hint_y: None
+                        height: dp(44)
+                        background_normal: ""
+                        background_color: 0.4, 0.6, 0.8, 1  # Azul suave
+                        color: 0, 0, 0, 1
+                        font_size: '16sp'
+                        bold: True
+                        on_release: root.export_records()
+        BoxLayout:
+            size_hint_y: None
+            height: dp(48)
+            Button:
+                text: "Cargar registros"
+                on_release: root.load_records()
+                background_normal: ""
+                background_color: 0.6, 0.4, 0.8, 1  # Púrpura suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+            Button:
+                text: "Volver al menú"
+                on_release: app.root.current = "menu"
+                background_normal: ""
+                background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+                color: 0, 0, 0, 1  # Texto negro
+                font_size: '16sp'
+                bold: True
+
+<Acerca>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(10)
+
+        Label:
+            text: 'Respaldo y Sincronización'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            bold: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(200)
+            spacing: dp(10)
+            padding: [dp(10), dp(10)]
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.95, 0.95, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            TextInput:
+                id: username
+                hint_text: "Usuario"
+                size_hint_y: None
+                height: dp(40)
+                multiline: False
+
+            TextInput:
+                id: password
+                hint_text: "Contraseña"
+                size_hint_y: None
+                height: dp(40)
+                multiline: False
+                password: True
+
+            Button:
+                text: "Iniciar Sesión"
+                size_hint_y: None
+                height: dp(44)
+                background_normal: ""
+                background_color: 0.4, 0.6, 0.8, 1
+                on_release: root.iniciar_sesion(username.text, password.text)
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(150)
+            spacing: dp(10)
+
+            Label:
+                id: sync_status
+                text: "No sincronizado"
+                size_hint_y: None
+                height: dp(30)
+
+            Button:
+                text: "Sincronizar Datos"
+                size_hint_y: None
+                height: dp(44)
+                background_normal: ""
+                background_color: 0.4, 0.8, 0.4, 1
+                on_release: root.sincronizar()
+
+            Button:
+                text: "Restaurar Datos"
+                size_hint_y: None
+                height: dp(44)
+                background_normal: ""
+                background_color: 0.8, 0.4, 0.4, 1
+                on_release: root.restaurar()
+
+        Widget:
+            # Espaciador flexible
+
+        Button:
+            text: "Volver al menú"
+            size_hint_y: None
+            height: dp(44)
+            background_normal: ""
+            background_color: 0.6, 0.6, 0.6, 1
+            on_release: app.root.current = 'menu'
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(15)
+        
+        Label:
+            text: "Acerca de LactaSegura"
+            font_size: "24sp"
+            size_hint_y: None
+            height: dp(40)
+            color: 0, 0, 0, 1
+            bold: True
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(20)
+                padding: [0, dp(10)]
+
+                # Sección de información
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: content.height + dp(40)
+                    padding: [dp(20), dp(10)]
+                    canvas.before:
+                        Color:
+                            rgba: 0.95, 0.95, 0.95, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(10)]
+                    
+                    Label:
+                        id: content
+                        text: "App educativa para apoyo a madres y enfermeros.\n\nDesarrollada con el objetivo de proporcionar información confiable y herramientas útiles para el cuidado infantil.\n\nCaracterísticas principales:\n• Guías especializadas\n• Calculadora IMC infantil\n• Registro de seguimiento\n• Artículos científicos\n\nFuentes académicas:\n• Bezerra et al. (2022)\n• Abdelrahmman et al. (2025)\n\nVersión 1.0.0\n© 2025 LactaSegura"
+                        text_size: self.width - dp(20), None
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        color: 0, 0, 0, 1
+                        font_size: '16sp'
+                        halign: 'left'
+
+                # Sección de configuración
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: dp(160)
+                    padding: [dp(20), dp(10)]
+                    canvas.before:
+                        Color:
+                            rgba: 0.95, 0.95, 0.95, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(10)]
+
+                    Label:
+                        text: "Configuración del servidor"
+                        color: 0, 0, 0, 1
+                        font_size: '18sp'
+                        size_hint_y: None
+                        height: dp(30)
+                        bold: True
+
+                    TextInput:
+                        id: server_url
+                        hint_text: "URL del servidor (ej: https://api.ejemplo.com/articles)"
+                        size_hint_y: None
+                        height: dp(40)
+                        multiline: False
+                        padding: [dp(10), dp(10)]
+
+                    Button:
+                        text: "Guardar URL"
+                        size_hint_y: None
+                        height: dp(44)
+                        background_normal: ""
+                        background_color: 0.2, 0.6, 0.9, 1  # Azul vibrante
+                        color: 0, 0, 0, 1
+                        font_size: '16sp'
+                        bold: True
+                        on_release: app.save_remote_articles_url(server_url.text)
+
+        Button:
+            text: "Volver al menú"
+            size_hint_y: None
+            height: dp(44)
+            on_release: app.root.current = "menu"
+            background_normal: ""
+            background_color: 0.4, 0.8, 0.4, 1  # Verde suave
+            color: 0, 0, 0, 1
+            font_size: '16sp'
+            bold: True

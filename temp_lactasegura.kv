@@ -1,0 +1,144 @@
+# Sección de la calculadora IMC actualizada
+<CalculadoraIMC>:
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 0.98, 0.98, 0.98, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: "vertical"
+        padding: dp(16)
+        spacing: dp(10)
+
+        Label:
+            text: 'Calculadora IMC'
+            size_hint_y: None
+            height: dp(40)
+            font_size: '24sp'
+            color: 0, 0, 0, 1
+            bold: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(400)
+            padding: [dp(20), dp(10)]
+            spacing: dp(15)
+            canvas.before:
+                Color:
+                    rgba: 0.95, 0.95, 0.95, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [dp(15)]
+
+            # Edad
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(80)
+                Label:
+                    text: f'Edad: {root.edad} meses'
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: dp(30)
+                    font_size: '16sp'
+                    markup: True
+                    text_size: self.width, None
+                    halign: 'center'
+                Slider:
+                    min: 0
+                    max: 36
+                    step: 1
+                    value: float(root.edad) if root.edad and root.edad.replace('.','',1).isdigit() else 0
+                    on_value: root.edad = str(int(self.value))
+
+            # Peso
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(80)
+                Label:
+                    text: f'Peso: {root.peso} kg'
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: dp(30)
+                    font_size: '16sp'
+                    markup: True
+                    text_size: self.width, None
+                    halign: 'center'
+                Slider:
+                    min: 0.5
+                    max: 30
+                    step: 0.1
+                    value: float(root.peso) if root.peso and root.peso.replace('.','',1).isdigit() else 3.0
+                    on_value: root.peso = f"{self.value:.1f}"
+
+            # Talla
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(80)
+                Label:
+                    text: f'Talla: {root.talla} cm'
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: dp(30)
+                    font_size: '16sp'
+                    markup: True
+                    text_size: self.width, None
+                    halign: 'center'
+                Slider:
+                    min: 30
+                    max: 120
+                    step: 0.5
+                    value: float(root.talla) if root.talla and root.talla.replace('.','',1).isdigit() else 50.0
+                    on_value: root.talla = f"{self.value:.1f}"
+
+            # Resultado
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(120)
+                canvas.before:
+                    Color:
+                        rgba: 0.9, 0.9, 0.95, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(10)]
+
+                Label:
+                    text: 'IMC calculado:'
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: dp(30)
+                    font_size: '16sp'
+                Label:
+                    text: root.resultado if root.resultado else '---'
+                    color: 0, 0, 0, 1
+                    font_size: '36sp'
+                    bold: True
+
+        ScrollView:
+            Label:
+                text: root.interpretacion
+                markup: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width - dp(40), None
+                padding: dp(20), dp(20)
+                color: 0, 0, 0, 1
+                font_size: '16sp'
+
+        Button:
+            text: "Volver al menú"
+            size_hint_y: None
+            height: dp(44)
+            on_release: app.root.current = "menu"
+            background_normal: ""
+            background_color: 0.4, 0.8, 0.4, 1
+            color: 0, 0, 0, 1
+            font_size: '16sp'
+            bold: True

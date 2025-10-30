@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "c:\Users\ASUS\.kivy\LactaSegura_Kivy_Online\main.py", line 1092, in <module>
+    LactaSeguraApp().run()
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\app.py", line 956, in run
+    runTouchApp()
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\base.py", line 574, in runTouchApp
+    EventLoop.mainloop()
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\base.py", line 339, in mainloop
+    self.idle()
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\base.py", line 379, in idle
+    Clock.tick()
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\clock.py", line 733, in tick
+    self.post_idle(ts, self.idle())
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\clock.py", line 776, in post_idle
+    self._process_events()
+  File "kivy\\_clock.pyx", line 620, in kivy._clock.CyClockBase._process_events
+  File "kivy\\_clock.pyx", line 653, in kivy._clock.CyClockBase._process_events
+  File "kivy\\_clock.pyx", line 649, in kivy._clock.CyClockBase._process_events
+  File "kivy\\_clock.pyx", line 218, in kivy._clock.ClockEvent.tick
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\animation.py", line 370, in _update
+    self.stop(widget)
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\animation.py", line 236, in stop
+    self.dispatch('on_complete', widget)
+  File "kivy\\_event.pyx", line 727, in kivy._event.EventDispatcher.dispatch
+  File "kivy\\_event.pyx", line 1307, in kivy._event.EventObservers.dispatch
+  File "kivy\\_event.pyx", line 1231, in kivy._event.EventObservers._dispatch
+  File "C:\Users\ASUS\AppData\Local\Programs\Python\Python312\Lib\site-packages\kivy\uix\screenmanager.py", line 419, in _on_complete
+    self.screen_in.dispatch('on_enter')
+  File "kivy\\_event.pyx", line 731, in kivy._event.EventDispatcher.dispatch
+  File "c:\Users\ASUS\.kivy\LactaSegura_Kivy_Online\main.py", line 692, in on_enter
+    self.actualizar_estado_sync()
+  File "c:\Users\ASUS\.kivy\LactaSegura_Kivy_Online\main.py", line 697, in actualizar_estado_sync
+    self.ids.sync_status.text = app.cloud_sync.sync_status
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "kivy\\weakproxy.pyx", line 35, in kivy.weakproxy.WeakProxy.__setattr__
+  File "kivy\\properties.pyx", line 520, in kivy.properties.Property.__set__
+  File "kivy\\properties.pyx", line 564, in kivy.properties.Property.set
+  File "kivy\\properties.pyx", line 555, in kivy.properties.Property.set
+  File "kivy\\properties.pyx", line 797, in kivy.properties.StringProperty.check
+ValueError: Label.text accept only str
