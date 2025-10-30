@@ -1,0 +1,35 @@
+name: Android APK build
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build APK inside Docker (kivy/buildozer)
+        uses: addnab/docker-run-action@v3
+        with:
+          image: kivy/buildozer:latest
+          options: >-
+            --privileged
+            -v ${GITHUB_WORKSPACE}:/home/user/project
+            -w /home/user/project
+          run: |
+            # Ensure pip and buildozer are present (image normally includes buildozer)
+            python3 -m pip install --upgrade pip
+            pip install cython
+            # Build debug APK
+            buildozer -v android debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lactasegura-apk
+          path: bin/*.apk
